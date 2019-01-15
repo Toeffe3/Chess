@@ -1,5 +1,11 @@
 public class Chess {
+
+  //Create tow kings
+  static King wKing = new King(true);
+  static King bKing = new King(false);
+
   public static void main(String[] args) {
-    System.out.print("Hello World");
+    System.out.println("Welcome to Ches(e)s");
+    wKing.getPos();
   }
 }
