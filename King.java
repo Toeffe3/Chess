@@ -16,7 +16,7 @@ public class King {
 
   void getPos() {
     char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    System.out.print(a[pos[0]] +""+ pos[1]);
+    System.out.print(a[pos[0]] +""+ (pos[1]+1));
   }
 
   void checkmate() {
