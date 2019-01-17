@@ -7,7 +7,9 @@ public class Chess {
 
     // System.out.println("Welcome to Ches(e)s");
     // System.out.println("♔♕♖♗♘♙");
+    // System.out.println("K Q T B H P");
     // System.out.println("♚♛♜ B♞♟");
+    // System.out.println("k q t b h p{}");
     // System.out.println("■");
     // wKing.getPos();
 
