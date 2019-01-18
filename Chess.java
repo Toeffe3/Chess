@@ -1,73 +1,110 @@
 public class Chess {
 
+/*  Color: Code
+ *  Reset: 0
+ *  Sort:  1
+ *  Rød:   2
+ *  Grøn:  3
+ *  Gul:   4
+ *  Blå:   5
+ *  Lilla: 6
+ *  Cyan:  7
+ *  Hvid:  8
+ */
+
   public static String[][] onBoard = new String[8][8];
+  public static String input = "";
 
   public static void main(String[] args) {
+
+    //Scanner get = new Scanner(System.in());
+
+    //Create all the pieces
     createBoard();
 
-    // System.out.println("Welcome to Ches(e)s");
-    // System.out.println("♔♕♖♗♘♙");
-    // System.out.println("K Q T B H P");
-    // System.out.println("♚♛♜ B♞♟");
-    // System.out.println("k q t b h p{}");
-    // System.out.println("■");
-    // wKing.getPos();
+    // Greet message
+    println("Welcome to Ches(e)s", 3,0);
+    println("Use @help for help.",3,0);
+    println();
 
-    displayBoard();
+    // print("♔♕♖♗♘♙ ", 8,0);    println(" K Q T B H P", 8,0);
+    // print("♚♛♜ B♞♟ ", 0,0);    println(" k q t b h p", 0,0);
+
+    //displayBoard();
   }
 
-  //Creates all the pices
+  /* Creates all the pices */
   static void createBoard() {
-    King wKing = new King(true);
-    Queen wQueen = new Queen(true);
-    Knight wKnight1 = new Knight(true);
-    Knight wKnight2 = new Knight(true);
-    Bishop wBishop1 = new Bishop(true);
-    Bishop wBishop2 = new Bishop(true);
-    Rook wRook1 = new Rook(true);
-    Rook wRook2 = new Rook(true);
 
-    Pawn wPawn1 = new Pawn(true);
-    Pawn wPawn2 = new Pawn(true);
-    Pawn wPawn3 = new Pawn(true);
-    Pawn wPawn4 = new Pawn(true);
-    Pawn wPawn5 = new Pawn(true);
-    Pawn wPawn6 = new Pawn(true);
-    Pawn wPawn7 = new Pawn(true);
-    Pawn wPawn8 = new Pawn(true);
+    //TODO: Create a array for all pieces
+    King[]   wKings =   {new King(true)};
+    Queen[]  wQueens =  new Queen[9];       //Making space for 1 + 8 pawn-queens
+    Knight[] wKnights = {new Knight(true), new Knight(true)};
+    Bishop[] wBishops = {new Bishop(true), new Bishop(true)};
+    Rook[]   wRooks =   {new Rook(true), new Rook(true)};
+    Pawn[]   wPawns =   new Pawn[8];
 
-    King bKing = new King(false);
-    Queen bQueen = new Queen(false);
-    Knight bKnight1 = new Knight(false);
-    Knight bKnight2 = new Knight(false);
-    Bishop bBishop1 = new Bishop(false);
-    Bishop bBishop2 = new Bishop(false);
-    Rook bRook1 = new Rook(false);
-    Rook bRook2 = new Rook(false);
+    wQueens[0] = new Queen(true);
+    for (int i = 0; i < wPawns.length; i++) {
+      wPawns[i] = new Pawn(true);
+    }
 
-    Pawn bPawn1 = new Pawn(false);
-    Pawn bPawn2 = new Pawn(false);
-    Pawn bPawn3 = new Pawn(false);
-    Pawn bPawn4 = new Pawn(false);
-    Pawn bPawn5 = new Pawn(false);
-    Pawn bPawn6 = new Pawn(false);
-    Pawn bPawn7 = new Pawn(false);
-    Pawn bPawn8 = new Pawn(false);
+    King[]   bKings =   {new King(false)};
+    Queen[]  bQueens =  new Queen[9];       //Making space for 1 + 8 pawn-queens
+    Knight[] bKnights = {new Knight(false), new Knight(false)};
+    Bishop[] bBishops = {new Bishop(false), new Bishop(false)};
+    Rook[]   bRooks =   {new Rook(false), new Rook(false)};
+    Pawn[]   bPawns =   new Pawn[8];
+
+    bQueens[0] = new Queen(false);
+    for (int i = 0; i < bPawns.length; i++) {
+      bPawns[i] = new Pawn(false);
+    }
+
+    // while (wKings[1].alive || bKings[1].alive) {
+    //   // Continue game
+    // }
+
   }
 
   static void displayBoard() {
-    System.out.println("A B C D E F G H  x");
+    println();
+    println("A B C D E F G H  x", 0,0);
     for (int x = 0; x < 8; x++) {
       for (int y = 0; y < 8; y++) {
         if(onBoard[x][y]!=null) {
-          System.out.print(onBoard[x][y]);
+          print(" "+onBoard[x][y]+" ",0,1);
         } else if(y%2==x%2){
-          System.out.print("■ ");
+          print("  ",0,0);
         } else {
-          System.out.print("□ ");
+          print("  ",0,1);
         }
       }
-      System.out.println(" "+x);
+      println(" "+(x+1),0,0);
     }
   }
+
+  static void movepiece(int x, int y) {
+
+  }
+
+
+  /* Farst print and coloring */
+  static void print(String text, int f, int b) {
+    String y=(f+29)+"";
+    if(f==0||f>8){y="0";}
+    if(b>0&&b<9){y+=";"+(b+39);}
+    print("\033["+y+"m"+text);
+  } static void println(String text, int f, int b) {
+    print(text+"\n",f,b);
+  } static void print(String text) {
+    System.out.print(text);
+  } static void println(String text) {
+    print(text+"\n");
+  } static void print() {
+    print("\033[0m");
+  }  static void println() {
+    println("\033[0m");
+  }
+
 }
