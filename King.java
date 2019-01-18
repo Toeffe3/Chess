@@ -1,26 +1,15 @@
-public class King {
+public class King extends Piece {
 
-  boolean type;       //Black or white(true)
-  boolean alive;      //It is alive
-  int[] pos = {0,0};  //(A1) Its position [0] is the x-axis (letters) [1] is the y-axis (numbers)
-
-  King(boolean white) {
-    type = white;
+  King(char color) {
+    super(color, 'k');
   }
 
-  //Direction is a int 0-7. 0 is forward, 1 is diagonal right and so...
-  //Amount is the amount to jump
-  void move(int dir, int amo) {
+  void move() {
 
   }
 
-  void getPos() {
-    char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    System.out.print(a[pos[0]] +""+ (pos[1]+1));
-  }
-
-  void checkmate() {
-
+  boolean moves() {
+    return false;
   }
 
 }

@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.lang.NullPointerException;
+
 public class Chess {
 
 /*  Color: Code
@@ -12,59 +15,58 @@ public class Chess {
  *  Hvid:  8
  */
 
-  public static String[][] onBoard = new String[8][8];
-  public static String input = "";
+  public static String[][] onBoard = new String[8][8];                // 2D array with all current pieces
+
+  static Piece[] white = new Piece[16];                               // Array for all white pieces
+  static Piece[] black = new Piece[16];                               // -..
+
+  public static String input = "";                                    //
 
   public static void main(String[] args) {
 
-    //Scanner get = new Scanner(System.in());
+    Scanner get = new Scanner(System.in);
 
     //Create all the pieces
     createBoard();
+
+
 
     // Greet message
     println("Welcome to Ches(e)s", 3,0);
     println("Use @help for help.",3,0);
     println();
 
+    //while (white[0].alive && black[0].alive) {
+      // Continue game while both kings are alive
+
+      input = get.next();
+      print(input);
+
+    //}
+
     // print("♔♕♖♗♘♙ ", 8,0);    println(" K Q T B H P", 8,0);
     // print("♚♛♜ B♞♟ ", 0,0);    println(" k q t b h p", 0,0);
 
-    //displayBoard();
+    displayBoard();
   }
 
   /* Creates all the pices */
   static void createBoard() {
-
-    //TODO: Create a array for all pieces
-    King[]   wKings =   {new King(true)};
-    Queen[]  wQueens =  new Queen[9];       //Making space for 1 + 8 pawn-queens
-    Knight[] wKnights = {new Knight(true), new Knight(true)};
-    Bishop[] wBishops = {new Bishop(true), new Bishop(true)};
-    Rook[]   wRooks =   {new Rook(true), new Rook(true)};
-    Pawn[]   wPawns =   new Pawn[8];
-
-    wQueens[0] = new Queen(true);
-    for (int i = 0; i < wPawns.length; i++) {
-      wPawns[i] = new Pawn(true);
+    for (int i = 0; i < 32; i++) {
+        char c = i<16?'w':'b';
+        white[i%16]=i<1?
+          new King(c)
+        :i<2?
+          new Queen(c)
+        :i<4?
+          new Bishop(c)
+        :i<6?
+          new Knight(c)
+        :i<8?
+          new Rook(c)
+        :
+          new Pawn(c);
     }
-
-    King[]   bKings =   {new King(false)};
-    Queen[]  bQueens =  new Queen[9];       //Making space for 1 + 8 pawn-queens
-    Knight[] bKnights = {new Knight(false), new Knight(false)};
-    Bishop[] bBishops = {new Bishop(false), new Bishop(false)};
-    Rook[]   bRooks =   {new Rook(false), new Rook(false)};
-    Pawn[]   bPawns =   new Pawn[8];
-
-    bQueens[0] = new Queen(false);
-    for (int i = 0; i < bPawns.length; i++) {
-      bPawns[i] = new Pawn(false);
-    }
-
-    // while (wKings[1].alive || bKings[1].alive) {
-    //   // Continue game
-    // }
-
   }
 
   static void displayBoard() {
@@ -80,14 +82,9 @@ public class Chess {
           print("  ",0,1);
         }
       }
-      println(" "+(x+1),0,0);
+      println(" "+(7-x+1),0,0);
     }
   }
-
-  static void movepiece(int x, int y) {
-
-  }
-
 
   /* Farst print and coloring */
   static void print(String text, int f, int b) {
@@ -103,17 +100,8 @@ public class Chess {
     print(text+"\n");
   } static void print() {
     print("\033[0m");
-  }  static void println() {
+  } static void println() {
     println("\033[0m");
   }
 
-}
-
-public void Print(String text, int f, int b) {
-  String y=(f+29)+"";
-  if(f==0||f>8){y="0";}
-  if(b>0&&b<9){y+=";"+(b+39);}
-  System.out.print("\033["+y+"m"+text);
-} public void Print() {
-    System.out.print(RESET);
 }
