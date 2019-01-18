@@ -108,3 +108,12 @@ public class Chess {
   }
 
 }
+
+public void Print(String text, int f, int b) {
+  String y=(f+29)+"";
+  if(f==0||f>8){y="0";}
+  if(b>0&&b<9){y+=";"+(b+39);}
+  System.out.print("\033["+y+"m"+text);
+} public void Print() {
+    System.out.print(RESET);
+}
