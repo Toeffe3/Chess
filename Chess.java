@@ -14,60 +14,68 @@ public class Chess {
  *  Hvid:  8
  */
 
-  public static String[][] onBoard = new String[8][8];                // 2D array with all current pieces
+  public static char[][] onBoard = {
+    {'r','n','b','q','k','b','n','r'},
+    {'p','p','p','p','p','p','p','p'},
+    {'0','0','0','0','0','0','0','0'},
+    {'0','0','0','0','0','0','0','0'},
+    {'0','0','0','0','0','0','0','0'},
+    {'0','0','0','0','0','0','0','0'},
+    {'P','P','P','P','P','P','P','P'},
+    {'R','N','B','Q','K','B','N','R'},
+  };                                                                  // 2D array with all current pieces
   public static boolean[][][] selection = new boolean[8][8][2];       // 2layered 2D array for keeping track of the two selections (pick, move)
 
   static Piece[] white = new Piece[16];                               // Array for all white pieces
-  static Piece[] black = new Piece[16];                               // -..
+  static Piece[] black = new Piece[16];                               // -.. black pieces
 
-  public static String input = "";                                    //
+  public static int turn = 0;                                         // Keep track of player turn (white is equal)
+  public static String input = "";                                    // For user input
 
   public static void main(String[] args) {
 
-    Scanner get = new Scanner(System.in);
-
-    //Create all the pieces
-    createBoard();
-
-
+    Scanner get = new Scanner(System.in);                             // Init scanner
+    createBoard();                                                    // Init board - Creates all the pieces
 
     // Greet message
-    println("Welcome to Ches(e)s", 3,0);
-    println("Use @help for help.",3,0);
-    println();
+    print("",3,0); // Green font
+    println("Welcome to Ches(e)s");
+    println("Use @help for help.\n");
 
     //while (white[0].alive && black[0].alive) {
       // Continue game while both kings are alive
 
-      input = "D4"; //get.next();
-      select(input);
+      displayBoard();                                                 // Show the board and all pieces
+      input = "d2";                                                   /*Capture the user input*/
+          println("-> "+input,4,0);                                       /*For debugging purpose*/
+      select(input); //select(get.next());                            // Capture the user input
 
     //}
-
-    // print("♔♕♖♗♘♙ ", 8,0);    println(" K Q T B H P", 8,0);
-    // print("♚♛♜ B♞♟ ", 0,0);    println(" k q t b h p", 0,0);
-
-    displayBoard();
   }
 
-  static boolean fistselect;
+  static boolean fistselect = true;                                   // Keep track of wether to select a piece or move the piece
 
   static void select(String cord) {
-
-    if (cord.matches("[A-H,a-h][1-8]")) {
-      println("Sucess");
-      if (fistselect == true) {
-
-      } else {
-        fistselect = true;
-        selection[8-(cord.charAt(1)-48)][(int)cord.charAt(0)-(((int)cord.charAt(0)>=97)?97:65)][0] = true;
-        fistselect = false;
+    print("",2,0);                                                    // Set the text color to red (for errors)
+    if (cord.matches("[A-H,a-h][1-8]")) {                             // Check that the input can be translated using Rexexp (Regular Expression)
+      int px = 8-(cord.charAt(1)-48);                                 // Convert the cordinates to array-index
+      int py = (int)cord.charAt(0)-(((int)cord.charAt(0)>=97)?97:65); // -..
+      int sPiece = (int) onBoard[px][py];
+      if (sPiece<97 && turn%2==0 || sPiece>=97 && turn%2==1) {        // Check if its the current players piece
+        if (fistselect == true) {                                     // The fist selection
+          fistselect = false;                                         // ready for second selection
+          selection[px][py][0] = true;                                // Set the spot in selection array to true
+        } else {                                                      // The second selection
+          fistselect = true;                                          // -.. not
+          selection[px][py][1] = true;                                // -.. where to move
+        }
       }
-
-    } else if (cord.matches("[1-8][A-H,a-h]")) {
-      print("Invalid notation use X0 or x0.", 2,0);
+    } else if(cord.matches("[A-H,a-h][1-8]")) {                       // Error messages
+      print("Not a walid target.");                                   // -..
+    } else if (cord.matches("[1-8][A-H,a-h]")) {                      // -..
+      print("Invalid notation use X0 or x0.");                        // -..
     } else {
-      print("Invalid position, use A-H or a-h and 1-8.", 2,0);
+      print("Invalid position, use A-H or a-h, and 1-8.");            // -..
     }
   }
 
@@ -75,36 +83,31 @@ public class Chess {
   static void createBoard() {
     for (int i = 0; i < 32; i++) {
         char c = i<16?'w':'b';
-        white[i%16]=i<1?
-          new King(c)
-        :i<2?
-          new Queen(c)
-        :i<4?
-          new Bishop(c)
-        :i<6?
-          new Knight(c)
-        :i<8?
-          new Rook(c)
-        :
-          new Pawn(c);
+        if(c=='w') {
+          white[i]=i<1?new King(c):i<2?new Queen(c):i<4?new Bishop(c):i<6?new Knight(c):i<8?new Rook(c):new Pawn(c);
+        } else {
+          black[i-16]=i<1?new King(c):i<2?new Queen(c):i<4?new Bishop(c):i<6?new Knight(c):i<8?new Rook(c):new Pawn(c);
+        }
     }
+
+    //TODO: Add the pos in the class instances! But how???
   }
 
+  //TODO: Add valid paths for selected piece
   static void displayBoard() {
     println();
     println("A B C D E F G H  x", 0,0);
     for (int x = 0; x < 8; x++) {
       for (int y = 0; y < 8; y++) {
-        if(onBoard[x][y]!=null) {
-          int bclr = onBoard[x][y].matches("[k,q,b,n,t]")?8:1;
-          int fclr = onBoard[x][y].matches("[k,q,b,n,t]")?1:0;
-          print(" "+onBoard[x][y]+" ",fclr,bclr);
+        if(onBoard[x][y]!='0') {
+          int bclr = (y%2==x%2?1:8);
+          int fclr = ((int)onBoard[x][y])>=97?6:7;
+          print(""+onBoard[x][y]+" ",fclr,bclr);
         } else if(selection[x][y][0]){
-          print("",0,4);
+          print("  ",0,4);
         } else {
-          print("",0,(y%2==x%2?0:1));
+          print("  ",0,(y%2==x%2?1:8));
         }
-        print("  ");
       }
       println(" "+(8-x),0,0);
     }
