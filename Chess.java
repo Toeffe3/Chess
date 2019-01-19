@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.NullPointerException;
 
 public class Chess {
 
@@ -16,6 +15,7 @@ public class Chess {
  */
 
   public static String[][] onBoard = new String[8][8];                // 2D array with all current pieces
+  public static boolean[][][] selection = new boolean[8][8][2];       // 2layered 2D array for keeping track of the two selections (pick, move)
 
   static Piece[] white = new Piece[16];                               // Array for all white pieces
   static Piece[] black = new Piece[16];                               // -..
@@ -39,8 +39,8 @@ public class Chess {
     //while (white[0].alive && black[0].alive) {
       // Continue game while both kings are alive
 
-      input = get.next();
-      print(input);
+      input = "D4"; //get.next();
+      select(input);
 
     //}
 
@@ -48,6 +48,27 @@ public class Chess {
     // print("♚♛♜ B♞♟ ", 0,0);    println(" k q t b h p", 0,0);
 
     displayBoard();
+  }
+
+  static boolean fistselect;
+
+  static void select(String cord) {
+
+    if (cord.matches("[A-H,a-h][1-8]")) {
+      println("Sucess");
+      if (fistselect == true) {
+
+      } else {
+        fistselect = true;
+        selection[8-(cord.charAt(1)-48)][(int)cord.charAt(0)-(((int)cord.charAt(0)>=97)?97:65)][0] = true;
+        fistselect = false;
+      }
+
+    } else if (cord.matches("[1-8][A-H,a-h]")) {
+      print("Invalid notation use X0 or x0.", 2,0);
+    } else {
+      print("Invalid position, use A-H or a-h and 1-8.", 2,0);
+    }
   }
 
   /* Creates all the pices */
@@ -75,14 +96,17 @@ public class Chess {
     for (int x = 0; x < 8; x++) {
       for (int y = 0; y < 8; y++) {
         if(onBoard[x][y]!=null) {
-          print(" "+onBoard[x][y]+" ",0,1);
-        } else if(y%2==x%2){
-          print("  ",0,0);
+          int bclr = onBoard[x][y].matches("[k,q,b,n,t]")?8:1;
+          int fclr = onBoard[x][y].matches("[k,q,b,n,t]")?1:0;
+          print(" "+onBoard[x][y]+" ",fclr,bclr);
+        } else if(selection[x][y][0]){
+          print("",0,4);
         } else {
-          print("  ",0,1);
+          print("",0,(y%2==x%2?0:1));
         }
+        print("  ");
       }
-      println(" "+(7-x+1),0,0);
+      println(" "+(8-x),0,0);
     }
   }
 
