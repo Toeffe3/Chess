@@ -7,7 +7,6 @@ abstract class Piece {
   boolean alive = true;                                               // Is the piece alive??
   int[] pos = {0,0};                                                  // The pieces position
 
-  Piece(char color, char t, x, y) {                                   // Creates the piece
   Piece(char color, char t, int x, int y) {                           // Creates the piece
     player = color=='w'?true:false;                                   // Sets the player/color
     pos[0] = x; pos[1] = y;                                           // Set the position
