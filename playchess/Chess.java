@@ -7,7 +7,6 @@ public class Chess {
   /*  Color codes
    *  Reset: 0
    *  Sort:  1
-   *  Rød:   2
    *  Grøn:  3
    *  Gul:   4
    *  Blå:   5
@@ -25,7 +24,7 @@ public class Chess {
     println("Welcome to Ches(e)s");                                   // Greet message
     println("Use @help for help.\n");                                 // -..
 
-    //while (var.white[0].alive && var.black[0].alive) {
+    // while (var.white[0].alive && var.black[0].alive) {
       // Continue game while both kings are alive
 
       displayBoard();                                                 // Show the board and all pieces
@@ -33,7 +32,7 @@ public class Chess {
           println("-> "+var.input,4,0);                               /*For debugging purpose*/
       //select(var.input); //select(get.next());                        // Capture the user input
       displayBoard();
-    //}
+    // }
   }
 
   static boolean fistselect = true;                                   // Keep track of wether to select a piece or move the piece
