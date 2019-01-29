@@ -20,3 +20,4 @@ public class var {
   public static int turn = 0;                                         // Keep track of player turn (white is equal)
   public static String input = "";                                    // For user input
 }
+ 

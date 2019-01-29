@@ -28,10 +28,12 @@ public class Chess {
       // Continue game while both kings are alive
 
       displayBoard();                                                 // Show the board and all pieces
-          var.input = "d2";                                           /*Capture the user input*/
-          println("-> "+var.input,4,0);                               /*For debugging purpose*/
-      //select(var.input); //select(get.next());                        // Capture the user input
+      var.input = get.next();                                         /*Capture the user input*/
+
+      select(var.input);
+      println("-> "+var.input,4,0);                                 /*For debugging purpose*/
       displayBoard();
+      var.input = get.next();
     // }
   }
 
@@ -43,10 +45,12 @@ public class Chess {
       int px = 8-(cord.charAt(1)-48);                                 // Convert the cordinates to array-index
       int py = (int)cord.charAt(0)-(((int)cord.charAt(0)>=97)?97:65); // -..
       int sPiece = (int) var.onBoard[px][py];
+      println("Seleted a "+(char)sPiece);
       if (sPiece<97&&var.turn%2==0||sPiece>=97&&var.turn%2==1) {      // Check if its the current players piece
+        println("Ready for 2. selection");
         if (fistselect == true) {                                     // The fist selection
           fistselect = false;                                         // ready for second selection
-          var.selection[px][py][0] = true;                                // Set the spot in selection array to true
+          var.selection[px][py][0] = true;                            // Set the spot in selection array to true
 
           for(int i = 0; i < 16; i++) {                               // For all pieces
             var.white[i].moves(px,py);                                // Get valid moves for all white pieces at px,py

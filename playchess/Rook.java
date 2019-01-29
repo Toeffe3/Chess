@@ -15,4 +15,4 @@ public class Rook extends Piece {
   public void moves(int x, int y) {
   }
 
-}
+} 
