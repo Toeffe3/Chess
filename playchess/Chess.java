@@ -78,17 +78,17 @@ public class Chess {
     for (int i = 0; i < 32; i++) {
         char c = i<16?'w':'b';
         if(c=='w') {
-          var.white[i]=i<1?new King(c,x,y)
+          var.white[i]=i<1?new King(c,5,1)
           :i<2?
-          new Queen(c,x,y)
+          new Queen(c,4,1)
           :i<4?
-          new Bishop(c,x,y)
+          new Bishop(c,(i-2)*3,1)
           :i<6?
-          new Knight(c,x,y)
+          new Knight(c,(i-4)*5+2,1)
           :i<8?
-          new Rook(c,x,y)
+          new Rook(c,(i-6)*7+1,1)
           :
-          new Pawn(c,x,y);
+          new Pawn(c,i-7,2);
         } else {
           var.black[i-16]=i<1?new King(c,x,y):i<2?new Queen(c,x,y):i<4?new Bishop(c,x,y):i<6?new Knight(c,x,y):i<8?new Rook(c,x,y):new Pawn(c,x,y);
         }

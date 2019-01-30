@@ -15,8 +15,8 @@ class Pawn extends Piece {                                            // Extend 
   }
 
   public void moves(int x, int y) {
-    if(super.pos[0] == x && super.pos[1] == y) {
-      println("Found a piece at: "+x+","+y);
+    //if(super.pos[0] == x && super.pos[1] == y) {
+      System.out.println("Found a piece at: "+x+","+y);
       /* Algo for valid movment */
       if (fistmove && var.onBoard[x+1][y] == '0' && var.onBoard[x+2][y] == '0') {
         System.out.print("Piece can move twice!");
@@ -30,8 +30,7 @@ class Pawn extends Piece {                                            // Extend 
         System.out.print("Piece can't move");
       }
       //selection[x][y][2]
-    }
+    //}
   }
 
 }
- 
