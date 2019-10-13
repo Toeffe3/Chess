@@ -1,18 +1,62 @@
-package playchess;
+package skak;
 
-abstract class Piece {
+/**
+ * All pieces functions.
+ */
 
-  boolean player;                                                     // true (white), false (black)
-  char type;                                                           // 0-5, King Queen Bishop Knight Tower Pawn
-  boolean alive = true;                                               // Is the piece alive??
-  int[] pos = {0,0};                                                  // The pieces position
-
-  Piece(char color, char t, int x, int y) {                           // Creates the piece
-    player = color=='w'?true:false;                                   // Sets the player/color
-    pos[0] = x; pos[1] = y;                                           // Set the position
-    type = t;
-  }
-
-  abstract void moves(int x, int y);                                  // Allow to call the moves function which is differnt for all types
-  abstract void move(int x, int y);                                   // -..
+public class Piece {
+    /**
+     * The color of the piece black 0 / white 1
+     */
+    int farve;
+    
+    /**
+     * The type of the piece 4: Rook, 5: Pawn, -1 none.
+     */
+    int type;
+    
+    /**
+     * Creates a new piece
+     * @param t type (0-5) for the different types og pieces
+     * @param f color black/white 0/1
+     **/
+    Piece(int t, int f) {
+        farve = f;
+        type = t;
+    }
+    
+    /**
+     * Moves the piece if the move is valid
+     * @param fx From x (the position of the piece)
+     * @param fy From y (the position of the piece)
+     * @param tx To x (the new position of the piece)
+     * @param ty To y (the new position of the piece)
+     * @return true if sucessfully moved or attacked 
+     **/
+    public boolean setPosition(int fx, int fy, int tx, int ty) {
+        return false;
+    }
+    
+    /**
+     * Displays the piece as follows: [colorprefix]-[typeprefix] displays SPACEs if empty
+     */
+    public void display() {
+        String[] nameOfType = {"K", "Q", "B", "N", "R", "P", " "};
+        System.out.print(farve==1?"W-":farve==0?"B-":" -" );
+        System.out.print(nameOfType[type>-1?type:6]+ " ");
+    }
+    
+    /**
+     * Replaces the piece on a new tile
+     * @param fx From x (the position of the piece)
+     * @param fy From y (the position of the piece)
+     * @param tx To x (the new position of the piece)
+     * @param ty To y (the new position of the piece)
+     * @return true
+     */
+    boolean move(int fx, int fy, int tx, int ty) {
+        var.board[tx][ty].onTile = this;
+        var.board[fx][fy].onTile = new empty();
+        return true;
+    }
 }
