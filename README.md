@@ -1,2 +1,4 @@
 # Chess
 Skakspil
+
+School assignment
